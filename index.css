@@ -1,63 +1,120 @@
 body{
     margin: 0;
     padding: 0;
-    background-color: rgb(26, 17, 17);
+
+    background-color: rgb(20, 27, 24);
+    
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     
+    height: 100vh;
+    width: 100vw;   
 }
 
-.button{
-    font-size: 42px;
-    border: solid #38363d 1px;
-    background-color: antiquewhite;
-    color: black;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.button:hover{
-    background-color: #38363d;
-}
-
-#calculator{
-    background-color: rgb(14, 10, 10);
-    
-    width: 25vw;
-    height: fit-content;
-    margin-top: 20vh;
-}
-
-#text-content{
+.calculator{
     display: flex;
-    align-content: center;
-    justify-content: center;
+    flex-direction: column;
+
+    background-color: rgb(66, 66, 66);
+    border: 2px solid rgb(33, 32, 32);
+    border-radius: 10px;
     
-    margin-top: 40px;
-    margin-bottom: 40px; 
+    width: 90vw;
+    min-width: 250px;
+    max-width: 400px;
+    height: 90vh;
+    
+    margin-top: 30px;
+    padding: 5px;
 }
 
-#vysledok{
-    font-size: xx-large;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 5px;
+.display {
+    height: 10%;
+
+    padding: 20px;
+    margin: 10px;
     
-    justify-self: center;
-    color: rgb(59, 58, 58);
-    background-color: antiquewhite;
+    background-color: rgb(97, 97, 97);
+    border-radius: 10px;
 }
 
-#grid{
+.display-grid{
     display: grid;
-    gap: 5px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 33% 33% 33%;
+    
+    background-color: yellowgreen;
+    
+    height: 100%;
+    width: 100%;
 }
 
-#rovna_sa{
-    grid-column: span 2;
+.prev-number{
+    grid-column: 1;
+    grid-row: 1;
+
+    margin-left: auto;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
-#delete-everything{
-    grid-column: span 3;
+.main-number{
+    margin-left: auto;
+    margin-right: 5px;
+
+    grid-column: 1;
+    grid-row: 3;
+
+    font-size: large;
+}
+
+.buttons{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 30px;
+    
+    display: grid;
+    
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    grid-template-columns: 22% 22% 22% 22%;
+}
+
+.buttons > button{
+    font-size: large;
+    
+    white-space: nowrap;
+    
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    
+    border-radius: 20px;
+    border: 1px solid gray;
+
+    cursor: pointer;
+    background-color: rgb(35, 35, 35);
+    color: white;
+    
+}
+
+.buttons > button:active{
+    background-color: rgb(60, 60, 60);
+}
+
+.equals {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+.delete {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.delete-all{
+    grid-column-start: 3;
+    grid-column-end: 5;
 }

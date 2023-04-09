@@ -1,151 +1,116 @@
-//global vars
-let prevcislo = null
-let znamienko = null
-let usingoperation = 0
+//functions
+function number_click(event_listener){
+    const main_number = document.getElementsByClassName("main-number")[0]
+    const prev_number = document.getElementsByClassName("prev-number")[0]
 
-//number buttons
-
-const nula = document.getElementById("nula")
-const jedna = document.getElementById("jedna")
-const dva = document.getElementById("dva")
-const tri = document.getElementById("tri")
-const styri = document.getElementById("styri")
-const pat = document.getElementById("pat")
-const sest = document.getElementById("sest")
-const sedem = document.getElementById("sedem")
-const osem = document.getElementById("osem")
-const devat = document.getElementById("devat")
-
-nula.arg = 0
-jedna.arg = 1
-dva.arg = 2
-tri.arg = 3
-styri.arg = 4
-pat.arg = 5
-sest.arg = 6
-sedem.arg = 7
-osem.arg = 8
-devat.arg = 9
-
-nula.addEventListener("click", writetotext)
-jedna.addEventListener("click", writetotext)
-dva.addEventListener("click", writetotext)
-tri.addEventListener("click", writetotext)
-styri.addEventListener("click", writetotext)
-pat.addEventListener("click", writetotext)
-sest.addEventListener("click", writetotext)
-sedem.addEventListener("click", writetotext)
-osem.addEventListener("click", writetotext)
-devat.addEventListener("click", writetotext)
-
-function writetotext (event_listener) {
-    if(vysledok.innerText == "vysledok" || vysledok.innerText == "+" || vysledok.innerText == "-" || vysledok.innerText == "/" || vysledok.innerText == "*"){
-        vysledok.innerText = event_listener.currentTarget.arg
+    //regex to check if main number is + - / or * 
+    if (/^[-/*+]$/.test(main_number.innerHTML)){
+        prev_number.innerHTML = `${main_number.innerHTML}${prev_number.innerHTML}`
+        main_number.innerHTML = `${event_listener.currentTarget.arg}`
     }
     else{
-        vysledok.innerText = vysledok.innerText + event_listener.currentTarget.arg
-    }
-    
-    usingoperation = 0
-}
-// text field
-
-const vysledok = document.getElementById("vysledok")
-
-//delete buttons
-
-const delall = document.getElementById("delete-everything")
-const del = document.getElementById("delete")
-
-
-delall.addEventListener("click", delalltext)
-del.addEventListener("click", deltext)
-
-function delalltext(){
-    vysledok.innerText = "vysledok"
-    usingoperation = 0
-    prevcislo = null
-    znamienko = null
-    
-}
-
-function deltext(){
-    if(usingoperation == 0){
-        if(vysledok.innerText.length == 1){
-            vysledok.innerText = "vysledok"
-        }
-        else{
-            vysledok.innerText = vysledok.innerText.slice(0,-1)
-        }
-    }
-}
-//operation buttons
-
-const plus = document.getElementById("plus")
-const minus = document.getElementById("minus")
-const deleno = document.getElementById("deleno")
-const krat = document.getElementById("krat")
-
-plus.arg = "plus"
-minus.arg = "minus"
-deleno.arg = "deleno"
-krat.arg = "krat"
-
-plus.addEventListener("click", operation)
-minus.addEventListener("click", operation)
-deleno.addEventListener("click", operation)
-krat.addEventListener("click", operation)
-
-function operation(event_listener){
-    prevcislo = vysledok.innerText
-
-    if(event_listener.currentTarget.arg == "plus"){
-        znamienko = "+"
-        vysledok.innerText = "+"
-        usingoperation = 1
-    }
-
-    if(event_listener.currentTarget.arg == "minus"){
-        znamienko = "-"
-        vysledok.innerText = "-"
-        usingoperation = 1
-    }
-
-    if(event_listener.currentTarget.arg == "deleno"){
-        znamienko = "/"
-        vysledok.innerText = "/"
-        usingoperation = 1
-    }
-
-    if(event_listener.currentTarget.arg == "krat"){
-        znamienko = "*"
-        vysledok.innerText = "*"
-        usingoperation = 1
+        main_number.innerHTML = `${main_number.innerHTML}${event_listener.currentTarget.arg}` 
     }
 }
 
-//equal button
+function operation_click(event_listener){
+    const prev_number = document.getElementsByClassName("prev-number")[0]
+    const main_number = document.getElementsByClassName("main-number")[0]
 
-const rovna_sa = document.getElementById("rovna_sa")
+    prev_number.innerHTML = main_number.innerHTML
+    main_number.innerHTML = `${event_listener.currentTarget.arg}`
+}
 
-rovna_sa.addEventListener("click", equals)
+function equals_click(){
+    const prev_number = document.getElementsByClassName("prev-number")[0]
+    const main_number = document.getElementsByClassName("main-number")[0]
+    if( prev_number.innerHTML.length > 0 && main_number.innerHTML.length > 0){
+        const operation = prev_number.innerHTML[0]
 
-function equals(){
-    if(prevcislo != null && usingoperation == 0 && znamienko != null){
-        if(znamienko == "+"){
-            vysledok.innerText = parseInt(prevcislo) + parseInt(vysledok.innerText)
-        }
-
-        if(znamienko == "-"){
-            vysledok.innerText = parseInt(prevcislo) - parseInt(vysledok.innerText)
-        }
-
-        if(znamienko == "/"){
-            vysledok.innerText = parseInt(prevcislo) / parseInt(vysledok.innerText)
-        }
-
-        if(znamienko == "*"){
-            vysledok.innerText = parseInt(prevcislo) * parseInt(vysledok.innerText)
+        switch (operation) {
+            case "+":
+                main_number.innerHTML = parseInt(prev_number.innerHTML.slice(1)) + parseInt(main_number.innerHTML)                 
+                prev_number.innerHTML = ""
+                break;
+            
+            case "-":
+                main_number.innerHTML = parseInt(prev_number.innerHTML.slice(1)) - parseInt(main_number.innerHTML)                 
+                prev_number.innerHTML = ""
+            break;
+                                
+            case "/":
+                main_number.innerHTML = parseFloat((parseInt(prev_number.innerHTML.slice(1)) / parseInt(main_number.innerHTML)).toFixed(5))                 
+                prev_number.innerHTML = ""
+            break;
+            
+            case "*":
+                main_number.innerHTML = parseInt(prev_number.innerHTML.slice(1)) * parseInt(main_number.innerHTML)                 
+                prev_number.innerHTML = ""
+            break;
         }
     }
 }
+
+function delete_click(){
+    const main_number = document.getElementsByClassName("main-number")[0]
+    if( main_number.innerHTML > 0){
+        main_number.innerHTML = main_number.innerHTML.slice(0,-1)
+    }
+}
+
+function delete_all_click(){
+    const main_number = document.getElementsByClassName("main-number")[0]
+    const prev_number = document.getElementsByClassName("prev-number")[0]
+
+    main_number.innerHTML = ""
+    prev_number.innerHTML = ""
+}
+
+//global vars
+
+//class names of all number buttons on the calculator
+let number_buttons = [ 
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine"
+]
+
+//Assign event listeners to the number buttons
+for (let index = 0; index < number_buttons.length; index++) {
+    let button = number_buttons[index];
+    button = document.getElementsByClassName(button)[0]
+    button.arg = index
+    button.addEventListener("click", number_click) 
+}
+
+const add = document.getElementsByClassName("add")[0]
+add.arg = "+"
+add.addEventListener("click", operation_click)
+
+const substract = document.getElementsByClassName("substract")[0]
+substract.arg = "-"
+substract.addEventListener("click", operation_click)
+
+const multiply = document.getElementsByClassName("multiply")[0]
+multiply.arg = "*"
+multiply.addEventListener("click", operation_click)
+
+const divide = document.getElementsByClassName("divide")[0]
+divide.arg = "/"
+divide.addEventListener("click", operation_click)
+
+const equals = document.getElementsByClassName("equals")[0]
+equals.addEventListener("click", equals_click)
+
+const delete_button = document.getElementsByClassName("delete")[0]
+delete_button.addEventListener("click", delete_click)
+
+const delete_all = document.getElementsByClassName("delete-all")[0]
+delete_all.addEventListener("click", delete_all_click)
